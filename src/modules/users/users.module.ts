@@ -2,21 +2,24 @@ import { Database } from "bun:sqlite";
 import { Hono } from "hono";
 import { UsersRepository } from "./users.repository";
 import { UsersController } from "./users.controller";
+import { AuthController} from "./auth.controller"
 
 export class UsersModule {
   private readonly repository: UsersRepository;
-  private readonly controller: UsersController;
+  private readonly users: UsersController;
+
 
   constructor(private readonly database: Database) {
     this.repository = new UsersRepository(this.database);
-    this.controller = new UsersController(this.repository);
+    this.users = new UsersController(this.repository);
   }
 
-  public init(): void {
+  public init() {
     this.repository.init();
-  }
+  
 
-  public routes(): Hono {
-    return this.controller.routes();
+    return{
+      users: this.users.routes(),
+    }
   }
 }

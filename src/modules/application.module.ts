@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { Database } from "bun:sqlite";
 import { UsersModule } from "./users/users.module";
 
+//bun dev
 export class ApplicationModule {
   private readonly server: Hono;
   private readonly database: Database;
@@ -14,11 +15,12 @@ export class ApplicationModule {
   };
 
   public init(): ApplicationModule {
-    this.users.init();
+    const {users} = this.users.init();
+
+    this.server.route('/api/users', users);
 
     return this;
   }
-;
 
   public start(): Hono {
     return this.server

@@ -1,4 +1,4 @@
-import { ApplicationModule } from "./modules/application.module";
+import { ApplicationModule } from "./src/modules/application.module";
 
 const application = new ApplicationModule().init().server();
 

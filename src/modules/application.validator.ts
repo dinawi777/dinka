@@ -1,3 +1,6 @@
+import { zValidator } from "@hono/zod-validator";
+import type { ValidationTargets } from "hono";
+import type z from "zod";
 
 
 export class ApplicationValidator {
@@ -7,11 +10,12 @@ export class ApplicationValidator {
     >(target: Target, schema: T) {
         return zValidator(target, schema, this.onValidate.bind(this));
     };
+
     public static onValidate(result: {
         success: boolean;
-        error?: string;
+        error?: unknown;
     }): void {
-        if(!result.success) {
+        if (!result.success) {
             throw result.error;
         }
     }

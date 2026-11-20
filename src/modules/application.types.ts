@@ -1,7 +1,13 @@
-export type ApplicationValidator {
-    public static validate<
-        T extends z.ZodType,
-        target extends 
+import type { UserType } from "./users/users.types";
+
+export type ApplicationEnvironment = {
+    Bindings: {
+        JWT_SECRET: string;
+    }
+
+    Variables: {
+        user: UserType;
+    }
 }
 
 export type ApplicationResult<T> = ApplicationSuccessResult<T> | ApplicationFailedResult;
@@ -14,9 +20,4 @@ export type ApplicationSuccessResult<T> = {
 export type ApplicationFailedResult = {
     success: false;
     error: string;
-}
-
-type DemoType<FirstGeneric, SecondGeneric> = {
-    id: FirstGeneric;
-    title: SecondGeneric;
 }
